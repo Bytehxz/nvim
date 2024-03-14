@@ -16,6 +16,8 @@ function M.setup()
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-e>"] = cmp.mapping.abort(),
+      ["<C-Space>"] = cmp.mapping.complete(),
+
       
       -- Me permite cambiar el item si es visible
       -- ["<C-n>"] = cmp.mapping(function(fallback)
