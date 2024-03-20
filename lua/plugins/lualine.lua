@@ -5,10 +5,11 @@ return {
   },
   opts = {
     sections = {
+      lualine_a = { { "mode", icon = "", } },
       lualine_c = { { "filename", file_status = true, path = 1, } },
     },
-    winbar = {
-      lualine_c = { "filename" }
-    },
+    -- winbar = {
+    --   lualine_c = { "filename" }
+    -- },
   }
 }
