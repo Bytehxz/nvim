@@ -25,8 +25,10 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = "Window up" })
 -- Colorizer plugin colors
 vim.keymap.set('n', '<leader>ct', ':ColorizerToggle<cr>', { desc = "Colorizer current buffer "} )
 
--- Barbar plugin
+-- Barbar plugin | Se comentan por el plugin de bufferline.lua
 vim.keymap.set('n', '<Tab>', ':BufferNext<cr>', { desc = "Next Buffer" })
 vim.keymap.set('n', '<S-Tab>', ':BufferPrevious<cr>', { desc = "Prev Buffer" })
+
+
 
 
