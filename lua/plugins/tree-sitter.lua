@@ -13,6 +13,11 @@ return {
       "lua",
       "luadoc",
       "python",
+      "javascript",
+      "html",
+      "typescript",
+      "tsx",
+      "css",
     },
     highlight = {
       enable = true,
@@ -34,6 +39,23 @@ return {
           ["il"] = "@loop.inner",
         },
       },
+    },
+    autotag = {
+      enable = true,
+      enable_rename = true,
+      enable_close = true,
+      enable_close_on_slash = true,
+      filetypes = {
+        "javascript", 
+        "javascriptreact", 
+        "typescript", 
+        "typescriptreact",
+        "html",
+        "xml",
+        "php"
+      },
+
+      
     },
   },
 }
