@@ -7,6 +7,10 @@ vim.o.termguicolors = true
 opt.relativenumber = true
 opt.number = true
 opt.inccommand = "split"
+opt.tabstop = 2
+opt.shiftwidth = 2
+-- opt.expandtab
+
 
 -- Para poder poner con colores cuando copio un parrafo del texto
 vim.api.nvim_create_autocmd('TextYankPost', {
