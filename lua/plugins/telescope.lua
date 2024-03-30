@@ -99,6 +99,13 @@ return {
         require("telescope").extensions.file_browser.file_browser({ path = "%:h:p", select_buffer = true })
       end,
       desc = "Telescope file browser"
+    },
+    {
+      "<leader>fo",  -- space oldfile
+      function()
+        require("telescope.builtin").oldfiles()
+      end,
+      desc = "Telescope oldfiles"
     }
   },
 }

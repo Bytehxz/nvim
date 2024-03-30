@@ -22,11 +22,11 @@ return {
     local codewindow = require('codewindow')
     codewindow.setup({
       auto_enable = true,
-      minimap_width = 22, -- The width of the text part of the minimap
+      minimap_width = 12, -- The width of the text part of the minimap
       width_multiplier = 1, -- How many characters one dot represents
 
       active_in_terminals = false, -- Should the minimap activate for terminal buffers
-      auto_enable = true, -- Automatically open the minimap when entering a (non-excluded) buffer (accepts a table of filetypes)
+      -- auto_enable = true, -- Automatically open the minimap when entering a (non-excluded) buffer (accepts a table of filetypes)
       exclude_filetypes = { 'help' }, -- Choose certain filetypes to not show minimap on
       max_minimap_height = nil, -- The maximum height the minimap can take (including borders)
       max_lines = nil, -- If auto_enable is true, don't open the minimap for buffers which have more than this many lines.
