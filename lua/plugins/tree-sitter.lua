@@ -26,6 +26,9 @@ return {
     indent = {
       enable = true,
     },
+    autotag = {
+      enable = true
+    },
     textobjects = {
       select = {
         enable = true,
@@ -39,23 +42,6 @@ return {
           ["il"] = "@loop.inner",
         },
       },
-    },
-    autotag = {
-      enable = true,
-      enable_rename = true,
-      enable_close = true,
-      enable_close_on_slash = true,
-      filetypes = {
-        "javascript", 
-        "javascriptreact", 
-        "typescript", 
-        "typescriptreact",
-        "html",
-        "xml",
-        "php"
-      },
-
-      
     },
   },
 }

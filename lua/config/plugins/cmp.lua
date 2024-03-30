@@ -45,7 +45,7 @@ function M.setup()
       end
     end, { "i", "s" }),
 
-      ["<C-y>"] = cmp.mapping.confirm {
+      ["<CR>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       },
