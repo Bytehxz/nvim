@@ -7,7 +7,8 @@ return {
         "eslint_d",
         "prettier",
         "stylua",
-        "black"
+        "black",
+        "debugpy"
       }
     }
   },
@@ -93,3 +94,20 @@ return {
     end,
   }
 }
+
+
+--[[ Todo lo que debería tener mason instalado
+debugpy
+black
+clangd
+eslint-lsp eslint
+eslint_d
+html-lsp html
+isort
+lua-language-server lua_ls
+prettier
+pyright
+stylua
+tailwindcss-language-server tailwindcss
+typescript-language-server tsserver 
+]]
