@@ -20,6 +20,7 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = {
           -- LSP 
+          "bashls",
           "pyright",
           "clangd",
           "lua_ls",
@@ -56,9 +57,13 @@ return {
       })
 
       -- for C
-      -- local cap_clangd = require("cmp_nvim_lsp").default_capabilities()
       lspconfig_r.clangd.setup({
         -- capabilities = cap_clangd,
+        capabilities = capabilities
+      })
+
+      -- for bash
+      lspconfig_r.bashls.setup({
         capabilities = capabilities
       })
 
@@ -97,17 +102,19 @@ return {
 
 
 --[[ Todo lo que debería tener mason instalado
-debugpy
-black
-clangd
-eslint-lsp eslint
-eslint_d
-html-lsp html
-isort
-lua-language-server lua_ls
-prettier
-pyright
-stylua
-tailwindcss-language-server tailwindcss
-typescript-language-server tsserver 
+
+    ◍ bash-language-server bashls
+    ◍ black
+    ◍ clangd
+    ◍ debugpy
+    ◍ eslint-lsp eslint
+    ◍ eslint_d
+    ◍ html-lsp html
+    ◍ isort
+    ◍ lua-language-server lua_ls
+    ◍ prettier
+    ◍ pyright
+    ◍ stylua
+    ◍ tailwindcss-language-server tailwindcss
+    ◍ typescript-language-server tsserver
 ]]
