@@ -9,6 +9,12 @@ vim.keymap.set('v', '<', '<gv', { desc = "after tab out re-select the same"})
 vim.keymap.set('n', 'n', 'nzzzv', { desc = "Goes to the next result on the seach and put the cursor in the middle"})
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = "Goes to the prev result on the seach and put the cursor in the middle"})
 
+----------------------------------- insert mode --------------------------
+vim.keymap.set('i', '<C-h>' ,'<Left>', { desc = "Move left"})
+vim.keymap.set('i', '<C-j>' ,'<Down>', { desc = "Move down"})
+vim.keymap.set('i', '<C-k>' ,'<Up>', { desc = "Move up"})
+vim.keymap.set('i', '<C-l>' ,'<Right>', { desc = "Move right"})
+
 
 ---------------------------------- Normal mode ------------------------------------
 -- Clear highlines
