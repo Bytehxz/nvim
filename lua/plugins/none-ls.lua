@@ -13,8 +13,5 @@ return {
 				-- null_ls.builtins.
 			},
 		})
-
-		-- keymaps for none-ls
-		vim.keymap.set("n", "<leader>nl", vim.lsp.buf.format, { desc = "buffer format" })
 	end,
 }

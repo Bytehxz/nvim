@@ -51,7 +51,7 @@ return {
         function()
           require("telescope.builtin").git_bcommits()
         end,
-        desc = "Telescope Git status",
+        desc = "Telescope Git bcommits",
       },
       {
         "<leader>gb",  -- space git branches
@@ -88,7 +88,7 @@ return {
         desc = "Telescope Find Files",
       },
       {
-        "<leader>ht ", -- space help tags
+        "<leader>ht", -- space help tags
         function()
           require("telescope.builtin").help_tags()
         end,

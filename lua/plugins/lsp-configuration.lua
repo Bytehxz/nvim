@@ -46,9 +46,6 @@ return {
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "info of function"})
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to definition function" })
-      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "Code actions" })
 
       -- for python
       lspconfig_r.pyright.setup({

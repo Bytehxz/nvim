@@ -14,7 +14,5 @@ return {
 			has_breadcrumbs = false,
 			save_path = "/home/bytehxz/codeSnap/code.png",
 		})
-    vim.keymap.set('v', '<leader>ts', ':CodeSnapSave<CR>', { desc = "Take Screenshot of selected code"})
-
 	end,
 }
