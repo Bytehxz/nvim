@@ -107,6 +107,14 @@ return {
           require("telescope.builtin").oldfiles()
         end,
         desc = "Telescope oldfiles"
+      },
+
+      {
+        "<leader>fw",  -- find word in current buffer 
+        function ()
+          require("telescope.builtin").current_buffer_fuzzy_find()
+        end,
+        desc = "Telescope fuzzing word in current buffer"
       }
     },
   },

@@ -88,6 +88,17 @@ vim.keymap.set("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({sele
 vim.keymap.set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = "Search current word", })
 vim.keymap.set("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', { desc = "Search on current file", })
 
+----------------------------------- Goto preview definition
+--[[ Te permite ver de forma gráfica la definicio de una función por ejemplo 
+
+gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
+gpt <cmd>lua require('goto-preview').goto_preview_type_definition()<CR>
+gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
+gpD <cmd>lua require('goto-preview').goto_preview_declaration()<CR>
+gP <cmd>lua require('goto-preview').close_all_win()<CR>
+gpr <cmd>lua require('goto-preview').goto_preview_references()<CR> 
+
+]]
 
 ----------------------------------- telescope.lua
 -- Es un buscador de archivos completo que puede filtrar por nombre de archivo e incluso visualizar el estatus de los archivos git
@@ -178,6 +189,13 @@ keys = {
       require("telescope.builtin").oldfiles()
     end,
     desc = "Telescope oldfiles"
+  }
+  {
+    "<leader>fw",  -- find word in current buffer 
+    function ()
+      require("telescope.builtin").current_buffer_fuzzy_find()
+    end,
+    desc = "Telescope fuzzing word in current buffer"
   }
 }, 
 ]]
