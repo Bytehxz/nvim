@@ -4,8 +4,14 @@
 -- Poner los colores en el archivo actual
 vim.keymap.set("n", "<leader>ct", ":ColorizerToggle<cr>", { desc = "Colorizer current buffer " })
 
------------------------------------ Open float terminal
+----------------------------------- ToggleTerminal
 -- open_mapping = [["n", <C-T>, "Toggle terminal"]],
+-- Para que una vez que esté en modo terminal al presionar  <C+x> se ponga en modo normal y pueda seleccionar lo que se está mostrando en dicha terminal
+vim.api.nvim_exec([[
+  tnoremap <C-x> <C-\><C-n>
+]], false)
+
+
 ---------------------------------- Barbar.lua plugin
 -- Cambiar entre los buffers activos
 vim.keymap.set("n", "<Tab>", ":BufferNext<cr>", { desc = "Next Buffer" })

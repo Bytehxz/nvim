@@ -33,5 +33,4 @@ return {
       winblend = 3,
     },
   },
-  -- config = function() end,
 }
