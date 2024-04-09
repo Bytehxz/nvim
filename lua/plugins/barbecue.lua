@@ -10,6 +10,8 @@ return {
 		-- configurations go here
 	},
 	config = function()
-		require("barbecue").setup()
+		require("barbecue").setup({
+      theme = "catppuccin-macchiato"
+    })
 	end,
 }
