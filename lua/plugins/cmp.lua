@@ -10,6 +10,7 @@ return {
     "saadparwaiz1/cmp_luasnip",
     "windwp/nvim-autopairs",
     "rafamadriz/friendly-snippets",
+		"onsails/lspkind.nvim"
   },
   event = "VeryLazy",
   main = "config.plugins.cmp",
