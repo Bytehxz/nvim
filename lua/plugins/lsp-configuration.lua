@@ -64,7 +64,7 @@ return {
 			-- lspconfig_r.bashls.setup({
 			-- 	capabilities = capabilities,
 			-- })
-			lspconfig_r.phpactor.setup()
+			-- lspconfig_r.phpactor.setup()
 
 			-- for js
 			local servers = { "tsserver", "tailwindcss", "eslint", "clangd", "bashls", "intelephense", "phpactor" }
