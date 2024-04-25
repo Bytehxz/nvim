@@ -1,8 +1,18 @@
 vim.g.mapleader = " " -- Esto es para mappear la tecla <Space> o espacio en 
 local opt = vim.opt -- Para poder ver todas las posibles opciones :h options.txt # y en option-list colocar <ctrl>} y se abre el listado de las opciones
 local cmd = vim.cmd
+local o = vim.o
 -- 
-vim.o.termguicolors = true
+o.termguicolors = true
+o.clipboard = "unnamedplus"
+o.cursorline = true
+o.cursorlineopt = "number"
+o.smartindent = true
+o.ignorecase = true
+o.smartcase = true
+o.numberwidth = 2
+
+
 -- Numeros relativos y lo de inccommand
 opt.relativenumber = true
 opt.number = true
