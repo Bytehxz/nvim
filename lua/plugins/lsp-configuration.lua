@@ -30,7 +30,7 @@ return {
 					"eslint",
 					"html",
 					"intelephense",
-					"phpactor"
+					"phpactor",
 				},
 			})
 		end,
@@ -47,38 +47,41 @@ return {
 			local lspconfig_r = require("lspconfig")
 			-- local capabilities = vim.lsp.protocol.make_client_capabilities()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local on_attach = function(client, bufnr)
+				-- Enable completion triggered by <c-x><c-o>
+				vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+			end
 
 			-- for python
 			lspconfig_r.pyright.setup({
 				capabilities = capabilities,
+				-- on_attach = on_attach,
 				filetypes = { "python" },
 			})
 
-			-- for C
-			-- lspconfig_r.clangd.setup({
-			-- 	-- capabilities = cap_clangd,
-			-- 	capabilities = capabilities,
-			-- })
-			--
-			-- -- for bash
-			-- lspconfig_r.bashls.setup({
-			-- 	capabilities = capabilities,
-			-- })
-			-- lspconfig_r.phpactor.setup()
+			lspconfig_r.intelephense.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "php" },
+				-- root_dir = root_pattern("composer.json", ".git")
+				root_dir = function(pattern)
+					local cwd = vim.loop.cwd()
+					-- local root = util.root_pattern("composer.json", ".git")(pattern)
+					--
+					-- -- prefer cwd if root is a descendant
+					-- return util.path.is_descendant(cwd, root) and cwd or root
+					return cwd
+				end,
+			})
 
-			-- for js
-			local servers = { "tsserver", "tailwindcss", "eslint", "clangd", "bashls", "intelephense", "phpactor" }
+			local servers = { "tsserver", "tailwindcss", "eslint", "clangd", "bashls" }
 			for _, lsp in ipairs(servers) do
 				lspconfig_r[lsp].setup({
 					capabilities = capabilities,
+					-- on_attach = on_attach,
 				})
 			end
 
-			-- for html tags
-			-- npm i -g vscode-langservers-extracted
-			-- Add path for the result of command -v npm
-			-- local capabilities_html = vim.lsp.protocol.make_client_capabilities()
-			-- capabilities_html.textDocument.completion.completionItem.snippetSupport = true
 			require("lspconfig").html.setup({
 				cmd = { "vscode-html-language-server", "--stdio" },
 				filetypes = { "html" },

@@ -54,9 +54,25 @@ vim.keymap.set("n", "<leader>ghk", gitsigns.prev_hunk, { buffer = bufnr, desc = 
 -- ir a la definicion de una de las funciones del código
 -- informacion acerca de los parámetros que recibe la función si es que no la recordamos
 -- Y algunas acciones para hacer con el código
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "info of function" })
+-- local opts = 
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, { noremap=true, silent=true, desc="Diagnostic float description"} )
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="Goto prev diagnostic" })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="Goto next diagnostic" })
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, { noremap=true, silent=true, desc="Show all errors and warnings" })
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Info of function" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition of function" })
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { noremap = true, silent = true, desc = "Go to declaration" })
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { noremap = true, silent = true, desc = "Go to implementation" })
+vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, { noremap = true, silent = true, desc="Add folder in workspace" })
+vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, { noremap = true, silent = true, desc="Remove folder in workspace" })
+vim.keymap.set("n", "<space>wl", function()
+	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+end, { noremap = true, silent = true, desc="List folders in workspace" })
+vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { noremap = true, silent = true, desc="Display signature abuout symbol" })
+vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, { noremap = true, silent = true, desc="Type definition" })
+vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, { noremap = true, silent = true, desc="Rename a variable" })
+vim.keymap.set("n", "gr", vim.lsp.buf.references, { noremap = true, silent = true, desc="List references about the symbol" })
+-- vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, { noremap = true, silent = true, desc="" })
 
 ----------------------------------- minimap.lua
 -- Es el minimapa de los archivos que se muestra del lado derecho
