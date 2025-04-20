@@ -25,8 +25,6 @@ return {
 					"clangd",
 					"lua_ls",
 					-- For development
-					"tsserver",
-					"tailwindcss",
 					"eslint",
 					"html",
 					"intelephense",
@@ -74,7 +72,7 @@ return {
 				end,
 			})
 
-			local servers = { "tsserver", "tailwindcss", "eslint", "clangd", "bashls" }
+			local servers = { "eslint", "clangd", "bashls" }
 			for _, lsp in ipairs(servers) do
 				lspconfig_r[lsp].setup({
 					capabilities = capabilities,
