@@ -1,119 +1,152 @@
 return {
-	{
-		"williamboman/mason.nvim",
-		config = true,
-		opts = {
-			ensure_installed = {
-				"eslint_d",
-				"prettier",
-				"stylua",
-				"black",
-				"debugpy",
-			},
-		},
-	},
+  -- Mason: instala y gestiona binarios de LSP, linters y formateadores
+  {
+    "williamboman/mason.nvim",
+    config = true,
+    opts = {
+      ensure_installed = {
+        "eslint_d",
+        "prettier",
+        "stylua",
+        "black",
+        "debugpy",
+        "isort",
+      },
+    },
+  },
 
-	{
-		"williamboman/mason-lspconfig.nvim",
-		-- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					-- LSP
-					"bashls",
-					"pyright",
-					"clangd",
-					"lua_ls",
-					-- For development
-					"eslint",
-					"html",
-					"intelephense",
-					"phpactor",
-				},
-			})
-		end,
-	},
+  -- Mason-lspconfig: puente entre Mason y lspconfig
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "bashls",
+          "pyright",
+          "clangd",
+          "lua_ls",
+          "eslint",
+          "html",
+          "intelephense",
+        },
+      })
+    end,
+  },
 
-	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			"williamboman/mason.nvim",
-			"folke/neodev.nvim",
-		},
+  -- nvim-lspconfig: configuración de servidores LSP (API v0.11+)
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp", -- para capabilities
+    },
+    config = function()
+      -- Capabilities extendidas para autocompletado con nvim-cmp
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-		config = function()
-			local lspconfig_r = require("lspconfig")
-			-- local capabilities = vim.lsp.protocol.make_client_capabilities()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local on_attach = function(client, bufnr)
-				-- Enable completion triggered by <c-x><c-o>
-				vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-			end
+      -- Keymaps que se activan solo cuando un LSP se conecta al buffer
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp_keymaps", { clear = true }),
+        callback = function(event)
+          local bufnr = event.buf
+          local map = function(keys, func, desc)
+            vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+          end
 
-			-- for python
-			lspconfig_r.pyright.setup({
-				capabilities = capabilities,
-				-- on_attach = on_attach,
-				filetypes = { "python" },
-			})
+          map("K",          vim.lsp.buf.hover,           "Info de función")
+          map("gd",         vim.lsp.buf.definition,      "Ir a definición")
+          map("gD",         vim.lsp.buf.declaration,     "Ir a declaración")
+          map("gi",         vim.lsp.buf.implementation,  "Ir a implementación")
+          map("gr",         vim.lsp.buf.references,      "Ver referencias")
+          map("<space>rn",  vim.lsp.buf.rename,          "Renombrar variable")
+          map("<space>D",   vim.lsp.buf.type_definition, "Tipo de definición")
+          map("<space>e",   vim.diagnostic.open_float,   "Diagnóstico flotante")
+          map("<space>q",   vim.diagnostic.setloclist,   "Lista de errores")
+          map("[d",         vim.diagnostic.goto_prev,    "Diagnóstico anterior")
+          map("]d",         vim.diagnostic.goto_next,    "Diagnóstico siguiente")
+          map("<space>wa",  vim.lsp.buf.add_workspace_folder,    "Agregar carpeta al workspace")
+          map("<space>wr",  vim.lsp.buf.remove_workspace_folder, "Quitar carpeta del workspace")
+          map("<space>wl",  function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+          end, "Listar carpetas del workspace")
+        end,
+      })
 
-			lspconfig_r.intelephense.setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				filetypes = { "php" },
-				-- root_dir = root_pattern("composer.json", ".git")
-				root_dir = function(pattern)
-					local cwd = vim.loop.cwd()
-					-- local root = util.root_pattern("composer.json", ".git")(pattern)
-					--
-					-- -- prefer cwd if root is a descendant
-					-- return util.path.is_descendant(cwd, root) and cwd or root
-					return cwd
-				end,
-			})
+      -- ──────────────────────────────────────────────
+      -- Configuración de cada servidor LSP
+      -- Nueva API: vim.lsp.config('servidor', { ... })
+      -- ──────────────────────────────────────────────
 
-			local servers = { "eslint", "clangd", "bashls" }
-			for _, lsp in ipairs(servers) do
-				lspconfig_r[lsp].setup({
-					capabilities = capabilities,
-					-- on_attach = on_attach,
-				})
-			end
+      -- Python
+      vim.lsp.config("pyright", {
+        capabilities = capabilities,
+        filetypes = { "python" },
+      })
 
-			require("lspconfig").html.setup({
-				cmd = { "vscode-html-language-server", "--stdio" },
-				filetypes = { "html" },
-				capabilities = capabilities,
-			})
+      -- PHP
+      vim.lsp.config("intelephense", {
+        capabilities = capabilities,
+        filetypes = { "php" },
+        root_dir = function()
+          return vim.loop.cwd()
+        end,
+      })
 
-			-- for lua
-			require("neodev").setup()
-			require("lspconfig").lua_ls.setup({
-				settings = {
-					Lua = {
-						telemetry = { enable = false },
-						workspace = { checkThirdParty = false },
-					},
-				},
-			})
-		end,
-	},
+      -- HTML
+      vim.lsp.config("html", {
+        capabilities = capabilities,
+        filetypes = { "html" },
+      })
+
+      -- Lua (con soporte para la API de Neovim)
+      vim.lsp.config("lua_ls", {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            runtime = { version = "LuaJIT" },
+            workspace = {
+              checkThirdParty = false,
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = { enable = false },
+            diagnostics = {
+              globals = { "vim" }, -- reconoce 'vim' como global
+            },
+          },
+        },
+      })
+
+      -- Servidores con configuración por defecto
+      local simple_servers = { "eslint", "clangd", "bashls" }
+      for _, server in ipairs(simple_servers) do
+        vim.lsp.config(server, {
+          capabilities = capabilities,
+        })
+      end
+
+      -- Habilitar todos los servidores configurados arriba
+      vim.lsp.enable({
+        "pyright",
+        "intelephense",
+        "html",
+        "lua_ls",
+        "eslint",
+        "clangd",
+        "bashls",
+      })
+    end,
+  },
 }
 
---[[ Todo lo que debería tener mason instalado
-
-    ◍ bash-language-server bashls
-    ◍ black
-    ◍ clangd
-    ◍ debugpy
-    ◍ eslint-lsp eslint
-    ◍ eslint_d
-    ◍ html-lsp html
-    ◍ isort
-    ◍ lua-language-server lua_ls
-    ◍ prettier
-    ◍ pyright
-    ◍ stylua
-    ◍ tailwindcss-language-server tailwindcss
-    ◍ typescript-language-server tsserver
+--[[ Servidores que Mason debe tener instalados:
+  bash-language-server  → bashls
+  pyright               → pyright
+  clangd                → clangd
+  lua-language-server   → lua_ls
+  eslint-lsp            → eslint
+  html-lsp              → html
+  intelephense          → intelephense
+  prettier, stylua, black, isort, eslint_d  → formateadores (none-ls)
 ]]
