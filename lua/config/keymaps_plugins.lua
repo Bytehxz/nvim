@@ -104,13 +104,25 @@ The three "core" operations of add/delete/change can be done with the keymaps ys
 -- Este plugin es como un file explorer que muestra los archivos del lado izquierdo
 vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<cr>", { desc = "NvimTreeToggle" })
 
------------------------------------ spectre.lua 
--- Este plugin es para filtra por información que nos interese de forma que incluso se puede buscar por expresiones regulares 
--- tanto en el buffer actual como en un proyecto completo
-vim.keymap.set("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', { desc = "Open spectre to search word in workdirectory",	})
-vim.keymap.set("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = "Search current word", })
-vim.keymap.set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = "Search current word", })
-vim.keymap.set("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', { desc = "Search on current file", })
+----------------------------------- grug-far.lua
+-- Buscar y reemplazar en todo el proyecto con el poder completo de ripgrep
+-- Reemplaza a spectre con mejor mantenimiento y más features
+vim.keymap.set("n", "<leader>S", "<cmd>GrugFar<CR>", { desc = "Abrir Grug-Far (buscar en proyecto)" })
+vim.keymap.set("n", "<leader>sw", function()
+  local grug = require("grug-far")
+  grug.open({ prefills = { search = vim.fn.expand("<cword>") } })
+end, { desc = "Buscar palabra bajo el cursor" })
+vim.keymap.set("v", "<leader>sw", function()
+  local grug = require("grug-far")
+  -- toma el texto seleccionado visualmente
+  vim.cmd('noau normal! "vy"')
+  local selected = vim.fn.getreg("v")
+  grug.open({ prefills = { search = selected } })
+end, { desc = "Buscar selección visual" })
+vim.keymap.set("n", "<leader>sp", function()
+  local grug = require("grug-far")
+  grug.open({ prefills = { flags = vim.fn.expand("%") } })
+end, { desc = "Buscar solo en el archivo actual" })
 
 ----------------------------------- Goto preview definition
 --[[ Te permite ver de forma gráfica la definicio de una función por ejemplo 
@@ -225,4 +237,3 @@ keys = {
 ]]
 
 -----------------------------------
-

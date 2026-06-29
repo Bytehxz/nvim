@@ -6,6 +6,7 @@ return {
 	opts = {
 		options = {
 			globalstatus = true,
+			-- theme = "palenight",
 			-- theme = "dracula",
 			-- theme = 'horizon'
 		},

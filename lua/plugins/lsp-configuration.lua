@@ -1,7 +1,7 @@
 return {
   -- Mason: instala y gestiona binarios de LSP, linters y formateadores
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     config = true,
     opts = {
       ensure_installed = {
@@ -25,7 +25,7 @@ return {
 
   -- Mason-lspconfig: puente entre Mason y lspconfig
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
     config = function()
       require("mason-lspconfig").setup({
