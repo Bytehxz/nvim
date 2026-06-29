@@ -23,20 +23,10 @@ function M.setup()
 				show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
 				before = function(entry, vim_item)
-					-- Get the full snippet (and only keep first line)
-					local word = entry:get_insert_text()
-					if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-						word = vim.lsp.util.parse_snippet(word)
-					end
-					word = str.oneline(word)
+					-- Mostrar solo la primera línea del texto de inserción
+					local word = str.oneline(entry:get_insert_text())
 
-					-- concatenates the string
-					-- local max = 50
-					-- if string.len(word) >= max then
-					-- 	local before = string.sub(word, 1, math.floor((max - 3) / 2))
-					-- 	word = before .. "..."
-					-- end
-
+					-- Marcar snippets con ~ al final del abbr
 					if
 						entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
 						and string.sub(vim_item.abbr, -1, -1) == "~"
